@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Анкета кандидата — Менеджер з продажу | L-TEX</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ── CSS Variables ───────────────────────────────── */
+:root {
+  --navy: #1a2b4a;
+  --navy-deep: #0f1b33;
+  --navy-light: #263d5e;
+  --amber: #f0a500;
+  --amber-glow: #f5bc3c;
+  --amber-dim: #c78800;
+  --white: #ffffff;
+  --off-white: #f4f1eb;
+  --warm-gray: #e8e4dd;
+  --text: #2c2c2c;
+  --text-light: #6b6b6b;
+  --error: #d94040;
+  --error-bg: #fef2f2;
+  --success: #2ecc71;
+  --radius: 10px;
+  --shadow: 0 4px 24px rgba(26,43,74,0.10);
+  --shadow-lg: 0 12px 48px rgba(26,43,74,0.15);
+}
+
+/* ── Reset & Base ────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 15px;
+  color: var(--text);
+  background: var(--off-white);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 20% 0%, rgba(26,43,74,0.04) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 100%, rgba(240,165,0,0.04) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Header ──────────────────────────────────────── */
+.header {
+  background: var(--navy);
+  padding: 18px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.2);
+}
+.logo {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  font-size: 24px;
+  color: var(--white);
+  letter-spacing: 3px;
+}
+.logo span { color: var(--amber); }
+.header-subtitle {
+  font-size: 12px;
+  color: rgba(255,255,255,0.5);
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+/* ── Progress Bar ────────────────────────────────── */
+.progress-wrap {
+  background: var(--navy-deep);
+  padding: 16px 24px 20px;
+  position: sticky;
+  top: 60px;
+  z-index: 99;
+}
+.progress-steps {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 620px;
+  margin: 0 auto;
+  position: relative;
+}
+.progress-steps::before {
+  content: '';
+  position: absolute;
+  top: 16px;
+  left: 28px;
+  right: 28px;
+  height: 3px;
+  background: rgba(255,255,255,0.12);
+  border-radius: 2px;
+}
+.progress-line {
+  position: absolute;
+  top: 16px;
+  left: 28px;
+  height: 3px;
+  background: var(--amber);
+  border-radius: 2px;
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 0 8px rgba(240,165,0,0.4);
+}
+.step-dot {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--navy-light);
+  border: 2px solid rgba(255,255,255,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  color: rgba(255,255,255,0.4);
+  position: relative;
+  z-index: 2;
+  transition: all 0.4s ease;
+  cursor: default;
+}
+.step-dot.active {
+  background: var(--amber);
+  border-color: var(--amber);
+  color: var(--navy);
+  transform: scale(1.15);
+  box-shadow: 0 0 16px rgba(240,165,0,0.5);
+}
+.step-dot.done {
+  background: var(--amber-dim);
+  border-color: var(--amber-dim);
+  color: var(--navy);
+}
+.step-label {
+  position: absolute;
+  top: 40px;
+  font-size: 10px;
+  color: rgba(255,255,255,0.35);
+  white-space: nowrap;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+.step-dot.active .step-label,
+.step-dot.done .step-label { color: rgba(255,255,255,0.7); }
+
+/* ── Main Container ──────────────────────────────── */
+.main {
+  max-width: 640px;
+  margin: 40px auto;
+  padding: 0 20px 60px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Form Card ───────────────────────────────────── */
+.form-card {
+  background: var(--white);
+  border-radius: 16px;
+  padding: 40px 36px;
+  box-shadow: var(--shadow-lg);
+  position: relative;
+  overflow: hidden;
+}
+.form-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--navy), var(--amber));
+}
+
+/* ── Step Panels ─────────────────────────────────── */
+.step-panel { display: none; animation: fadeIn 0.4s ease; }
+.step-panel.active { display: block; }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.step-title {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 22px;
+  color: var(--navy);
+  margin-bottom: 6px;
+}
+.step-subtitle {
+  font-size: 14px;
+  color: var(--text-light);
+  margin-bottom: 28px;
+  line-height: 1.5;
+}
+
+/* ── Form Fields ─────────────────────────────────── */
+.field { margin-bottom: 20px; }
+.field label {
+  display: block;
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--navy);
+  margin-bottom: 6px;
+  letter-spacing: 0.2px;
+}
+.field label .req { color: var(--amber); font-weight: 700; margin-left: 2px; }
+.field label .opt { color: var(--text-light); font-weight: 400; font-size: 12px; }
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="number"],
+select,
+textarea {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid var(--warm-gray);
+  border-radius: var(--radius);
+  font-family: 'Open Sans', sans-serif;
+  font-size: 15px;
+  color: var(--text);
+  background: var(--white);
+  transition: border-color 0.25s, box-shadow 0.25s;
+  outline: none;
+}
+input:focus, select:focus, textarea:focus {
+  border-color: var(--amber);
+  box-shadow: 0 0 0 3px rgba(240,165,0,0.15);
+}
+textarea { resize: vertical; min-height: 90px; }
+select {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%231a2b4a' stroke-width='2' fill='none'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 40px;
+}
+
+/* Error state */
+.field.error input,
+.field.error select,
+.field.error textarea { border-color: var(--error); background: var(--error-bg); }
+.field .error-msg { display: none; font-size: 12px; color: var(--error); margin-top: 4px; font-weight: 500; }
+.field.error .error-msg { display: block; }
+
+/* ── Radio / Checkbox groups ─────────────────────── */
+.radio-group, .check-group { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px; }
+.radio-option, .check-option { position: relative; }
+.radio-option input, .check-option input { position: absolute; opacity: 0; pointer-events: none; }
+.radio-option label, .check-option label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border: 2px solid var(--warm-gray);
+  border-radius: var(--radius);
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text);
+  transition: all 0.2s;
+  user-select: none;
+}
+.radio-option label:hover, .check-option label:hover {
+  border-color: var(--amber);
+  background: rgba(240,165,0,0.05);
+}
+.radio-option input:checked + label,
+.check-option input:checked + label {
+  border-color: var(--amber);
+  background: rgba(240,165,0,0.1);
+  color: var(--navy);
+  font-weight: 600;
+}
+.check-option.disabled label {
+  opacity: 0.45;
+  cursor: not-allowed;
+  border-color: var(--warm-gray) !important;
+  background: transparent !important;
+}
+.max-warn { font-size: 12px; color: var(--amber-dim); font-weight: 500; margin-top: 4px; display: none; }
+.max-warn.visible { display: block; }
+
+/* Conditional field */
+.conditional { display: none; margin-top: 12px; padding-left: 16px; border-left: 3px solid var(--amber); animation: fadeIn 0.3s ease; }
+.conditional.show { display: block; }
+
+/* ── Char counter ────────────────────────────────── */
+.char-counter { font-size: 11px; color: var(--text-light); text-align: right; margin-top: 4px; }
+.char-counter.warn { color: var(--error); font-weight: 600; }
+
+/* ── Buttons ─────────────────────────────────────── */
+.btn-row { display: flex; justify-content: space-between; align-items: center; margin-top: 32px; gap: 12px; }
+.btn {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  padding: 14px 32px;
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: all 0.25s;
+  letter-spacing: 0.5px;
+}
+.btn-next { background: var(--amber); color: var(--navy); box-shadow: 0 4px 16px rgba(240,165,0,0.3); margin-left: auto; }
+.btn-next:hover { background: var(--amber-glow); transform: translateY(-2px); box-shadow: 0 6px 24px rgba(240,165,0,0.4); }
+.btn-back { background: transparent; color: var(--text-light); border: 2px solid var(--warm-gray); }
+.btn-back:hover { color: var(--navy); border-color: var(--navy-light); }
+.btn-submit { background: var(--navy); color: var(--white); box-shadow: 0 4px 16px rgba(26,43,74,0.3); margin-left: auto; }
+.btn-submit:hover { background: var(--navy-light); transform: translateY(-2px); box-shadow: 0 6px 24px rgba(26,43,74,0.35); }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none !important; }
+
+/* ── Status banner ───────────────────────────────── */
+.submit-status { margin-top: 12px; padding: 10px 16px; border-radius: var(--radius); font-size: 13px; font-weight: 500; display: none; }
+.submit-status.sending { display: block; background: #eef6ff; color: #1a2b4a; }
+.submit-status.success { display: block; background: #eafaf1; color: #1e8449; }
+.submit-status.fail { display: block; background: var(--error-bg); color: var(--error); }
+
+/* ── Thank You Page ──────────────────────────────── */
+.thank-you { text-align: center; padding: 40px 20px; }
+.checkmark-circle {
+  width: 90px; height: 90px; border-radius: 50%; background: var(--success);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 24px;
+  animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 8px 32px rgba(46,204,113,0.3);
+}
+@keyframes popIn { 0% { transform: scale(0); opacity: 0; } 60% { transform: scale(1.15); } 100% { transform: scale(1); opacity: 1; } }
+.checkmark-circle svg { width: 42px; height: 42px; stroke: white; stroke-width: 3; fill: none; stroke-dasharray: 60; stroke-dashoffset: 60; animation: drawCheck 0.6s 0.3s forwards ease; }
+@keyframes drawCheck { to { stroke-dashoffset: 0; } }
+.thank-you h2 { font-family: 'Montserrat', sans-serif; font-size: 24px; color: var(--navy); margin-bottom: 10px; }
+.thank-you p { color: var(--text-light); margin-bottom: 8px; line-height: 1.6; }
+.thank-you .contacts { margin-top: 24px; padding: 20px; background: var(--off-white); border-radius: var(--radius); }
+.thank-you .contacts p { font-size: 14px; color: var(--text); margin-bottom: 4px; }
+.score-badge {
+  display: inline-block; margin-top: 16px; padding: 8px 20px;
+  border-radius: 20px; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 14px;
+}
+.btn-telegram {
+  display: inline-flex; align-items: center; gap: 8px; margin-top: 20px; padding: 14px 32px;
+  background: #0088cc; color: white; font-family: 'Montserrat', sans-serif; font-weight: 700;
+  font-size: 15px; border-radius: var(--radius); text-decoration: none; transition: all 0.25s;
+  box-shadow: 0 4px 16px rgba(0,136,204,0.3);
+}
+.btn-telegram:hover { background: #006daa; transform: translateY(-2px); box-shadow: 0 6px 24px rgba(0,136,204,0.4); }
+
+/* ── Responsive ──────────────────────────────────── */
+@media (max-width: 600px) {
+  .form-card { padding: 28px 20px; border-radius: 12px; }
+  .step-title { font-size: 19px; }
+  .btn { padding: 12px 22px; font-size: 14px; }
+  .radio-group, .check-group { gap: 8px; }
+  .radio-option label, .check-option label { padding: 9px 14px; font-size: 13px; }
+  .main { margin-top: 24px; padding: 0 12px 40px; }
+  .progress-wrap { padding: 12px 16px 18px; }
+  .step-label { font-size: 9px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ HEADER ═══ -->
+<div class="header">
+  <div>
+    <div class="logo">L<span>-</span>TEX</div>
+    <div class="header-subtitle">Анкета кандидата</div>
+  </div>
+</div>
+
+<!-- ═══ PROGRESS BAR (6 steps) ═══ -->
+<div class="progress-wrap">
+  <div class="progress-steps">
+    <div class="progress-line" id="progressLine"></div>
+    <div class="step-dot active" data-step="1">1<span class="step-label">Дані</span></div>
+    <div class="step-dot" data-step="2">2<span class="step-label">Досвід</span></div>
+    <div class="step-dot" data-step="3">3<span class="step-label">Освіта</span></div>
+    <div class="step-dot" data-step="4">4<span class="step-label">Навички</span></div>
+    <div class="step-dot" data-step="5">5<span class="step-label">Ситуації</span></div>
+    <div class="step-dot" data-step="6">6<span class="step-label">Мотивація</span></div>
+  </div>
+</div>
+
+<!-- ═══ MAIN ═══ -->
+<div class="main">
+<div class="form-card">
+
+  <!-- ═══ STEP 1: Personal Data ═══ -->
+  <div class="step-panel active" id="step1">
+    <div class="step-title">Особисті дані</div>
+    <div class="step-subtitle">Заповніть основну контактну інформацію</div>
+
+    <div class="field" data-required>
+      <label>Прізвище, ім'я, по батькові <span class="req">*</span></label>
+      <input type="text" id="fullName" placeholder="Шевченко Олена Петрівна">
+      <div class="error-msg">Будь ласка, вкажіть ПІБ</div>
+    </div>
+    <div class="field" data-required>
+      <label>Вік <span class="req">*</span></label>
+      <input type="number" id="age" placeholder="28" min="16" max="70">
+      <div class="error-msg">Вкажіть вік (16-70)</div>
+    </div>
+    <div class="field" data-required>
+      <label>Місто проживання <span class="req">*</span></label>
+      <input type="text" id="city" placeholder="Луцьк">
+      <div class="error-msg">Вкажіть місто</div>
+    </div>
+    <div class="field" data-required>
+      <label>Телефон <span class="req">*</span></label>
+      <input type="tel" id="phone" placeholder="+380 67 123 45 67">
+      <div class="error-msg">Вкажіть номер телефону</div>
+    </div>
+    <div class="field" data-required>
+      <label>Telegram <span class="req">*</span></label>
+      <input type="text" id="telegram" placeholder="@username">
+      <div class="error-msg">Вкажіть Telegram нікнейм</div>
+    </div>
+    <div class="field">
+      <label>Email <span class="opt">(необов'язково)</span></label>
+      <input type="email" id="email" placeholder="email@example.com">
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-next" onclick="goNext()">Далі &rarr;</button>
+    </div>
+  </div>
+
+  <!-- ═══ STEP 2: Experience ═══ -->
+  <div class="step-panel" id="step2">
+    <div class="step-title">Досвід роботи</div>
+    <div class="step-subtitle">Розкажіть про свій професійний досвід</div>
+
+    <div class="field" data-required>
+      <label>Загальний стаж роботи <span class="req">*</span></label>
+      <select id="experience">
+        <option value="">Оберіть...</option>
+        <option value="less1">До 1 року</option>
+        <option value="1-3">1-3 роки</option>
+        <option value="3-5">3-5 років</option>
+        <option value="5+">5+ років</option>
+      </select>
+      <div class="error-msg">Оберіть стаж</div>
+    </div>
+
+    <div class="field" data-required>
+      <label>Досвід у продажах або роботі з клієнтами? <span class="req">*</span></label>
+      <div class="radio-group">
+        <div class="radio-option">
+          <input type="radio" name="salesExp" id="salesYes" value="yes" onchange="toggleConditional('salesDetail', true)">
+          <label for="salesYes">Так</label>
+        </div>
+        <div class="radio-option">
+          <input type="radio" name="salesExp" id="salesNo" value="no" onchange="toggleConditional('salesDetail', false)">
+          <label for="salesNo">Ні</label>
+        </div>
+      </div>
+      <div class="error-msg">Оберіть варіант</div>
+      <div class="conditional" id="salesDetail">
+        <div class="field">
+          <label>Опишіть коротко свій досвід</label>
+          <textarea id="salesDescription" placeholder="Наприклад: 2 роки менеджером у оптовій компанії..."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="field" data-required>
+      <label>Досвід у секонд-хенді або оптовій торгівлі? <span class="req">*</span></label>
+      <div class="radio-group">
+        <div class="radio-option"><input type="radio" name="shExp" id="shYes" value="yes"><label for="shYes">Так</label></div>
+        <div class="radio-option"><input type="radio" name="shExp" id="shNo" value="no"><label for="shNo">Ні</label></div>
+      </div>
+      <div class="error-msg">Оберіть варіант</div>
+    </div>
+
+    <div class="field" data-required>
+      <label>Досвід роботи з 1С? <span class="req">*</span></label>
+      <div class="radio-group">
+        <div class="radio-option"><input type="radio" name="exp1c" id="exp1cYes" value="yes"><label for="exp1cYes">Так</label></div>
+        <div class="radio-option"><input type="radio" name="exp1c" id="exp1cNo" value="no"><label for="exp1cNo">Ні</label></div>
+        <div class="radio-option"><input type="radio" name="exp1c" id="exp1cPartly" value="partly"><label for="exp1cPartly">Частково</label></div>
+      </div>
+      <div class="error-msg">Оберіть варіант</div>
+    </div>
+
+    <div class="field" data-required>
+      <label>Остання посада та компанія <span class="req">*</span></label>
+      <input type="text" id="lastJob" placeholder="Менеджер з продажу, ТОВ «Приклад»">
+      <div class="error-msg">Вкажіть останню посаду</div>
+    </div>
+    <div class="field" data-required>
+      <label>Причина пошуку нової роботи <span class="req">*</span></label>
+      <textarea id="reasonSearch" placeholder="Що спонукало шукати нову роботу?"></textarea>
+      <div class="error-msg">Опишіть причину</div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-back" onclick="goBack()">&larr; Назад</button>
+      <button class="btn btn-next" onclick="goNext()">Далі &rarr;</button>
+    </div>
+  </div>
+
+  <!-- ═══ STEP 3: Education (NEW) ═══ -->
+  <div class="step-panel" id="step3">
+    <div class="step-title">Освіта та курси</div>
+    <div class="step-subtitle">Інформація про вашу освіту та додаткове навчання</div>
+
+    <div class="field" data-required>
+      <label>Рівень освіти <span class="req">*</span></label>
+      <select id="eduLevel">
+        <option value="">Оберіть...</option>
+        <option value="Середня">Середня</option>
+        <option value="Середня спеціальна">Середня спеціальна</option>
+        <option value="Незакінчена вища">Незакінчена вища</option>
+        <option value="Вища">Вища</option>
+        <option value="Кілька вищих">Кілька вищих</option>
+      </select>
+      <div class="error-msg">Оберіть рівень освіти</div>
+    </div>
+
+    <div class="field" data-required>
+      <label>Навчальний заклад та спеціальність <span class="req">*</span></label>
+      <input type="text" id="eduInstitution" placeholder="ЛНТУ, спеціальність «Менеджмент»">
+      <div class="error-msg">Вкажіть навчальний заклад</div>
+    </div>
+
+    <div class="field" data-required>
+      <label>Рік закінчення <span class="req">*</span></label>
+      <input type="number" id="eduYear" placeholder="2020" min="1970" max="2030">
+      <div class="error-msg">Вкажіть рік закінчення</div>
+    </div>
+
+    <div class="field">
+      <label>Додаткові курси та сертифікати <span class="opt">(необов'язково)</span></label>
+      <textarea id="eduCourses" placeholder="Наприклад:&#10;- Курс «Ефективні продажі» (Prometheus, 2023)&#10;- Сертифікат 1С:Підприємство&#10;- Тренінг з переговорів"></textarea>
+    </div>
+
+    <div class="field">
+      <label>Знання мов</label>
+      <div class="check-group" id="langGroup">
+        <div class="check-option"><input type="checkbox" id="langUa" value="Українська"><label for="langUa">Українська</label></div>
+        <div class="check-option"><input type="checkbox" id="langEn" value="Англійська"><label for="langEn">Англійська</label></div>
+        <div class="check-option"><input type="checkbox" id="langPl" value="Польська"><label for="langPl">Польська</label></div>
+        <div class="check-option"><input type="checkbox" id="langOther" value="Інша"><label for="langOther">Інша</label></div>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-back" onclick="goBack()">&larr; Назад</button>
+      <button class="btn btn-next" onclick="goNext()">Далі &rarr;</button>
+    </div>
+  </div>
+
+  <!-- ═══ STEP 4: Skills ═══ -->
+  <div class="step-panel" id="step4">
+    <div class="step-title">Навички та можливості</div>
+    <div class="step-subtitle">Які інструменти вам знайомі та чи готові до умов роботи</div>
+
+    <div class="field">
+      <label>Впевнено користуєтесь:</label>
+      <div class="check-group" id="toolsGroup">
+        <div class="check-option"><input type="checkbox" id="toolTg" value="Telegram / Viber"><label for="toolTg">Telegram / Viber</label></div>
+        <div class="check-option"><input type="checkbox" id="toolExcel" value="Excel"><label for="toolExcel">Excel</label></div>
+        <div class="check-option"><input type="checkbox" id="tool1c" value="1С"><label for="tool1c">1С</label></div>
+        <div class="check-option"><input type="checkbox" id="toolSheets" value="Google Таблиці"><label for="toolSheets">Google Таблиці</label></div>
+        <div class="check-option"><input type="checkbox" id="toolCrm" value="CRM системи"><label for="toolCrm">CRM системи</label></div>
+      </div>
+    </div>
+
+    <div class="field" data-required>
+      <label>Водійські права категорії В? <span class="req">*</span></label>
+      <div class="radio-group">
+        <div class="radio-option"><input type="radio" name="license" id="licYes" value="yes"><label for="licYes">Так</label></div>
+        <div class="radio-option"><input type="radio" name="license" id="licNo" value="no"><label for="licNo">Ні</label></div>
+      </div>
+      <div class="error-msg">Оберіть варіант</div>
+    </div>
+
+    <div class="field" data-required>
+      <label>Власне авто? <span class="req">*</span></label>
+      <div class="radio-group">
+        <div class="radio-option"><input type="radio" name="car" id="carYes" value="yes"><label for="carYes">Так</label></div>
+        <div class="radio-option"><input type="radio" name="car" id="carNo" value="no"><label for="carNo">Ні</label></div>
+      </div>
+      <div class="error-msg">Оберіть варіант</div>
+    </div>
+
+    <div class="field" data-required>
+      <label>Готовність до відряджень у межах закріпленої території? <span class="req">*</span></label>
+      <div class="radio-group">
+        <div class="radio-option"><input type="radio" name="travel" id="trvYes" value="yes"><label for="trvYes">Так</label></div>
+        <div class="radio-option"><input type="radio" name="travel" id="trvNo" value="no"><label for="trvNo">Ні</label></div>
+        <div class="radio-option"><input type="radio" name="travel" id="trvDepends" value="depends"><label for="trvDepends">Залежно від умов</label></div>
+      </div>
+      <div class="error-msg">Оберіть варіант</div>
+    </div>
+
+    <div class="field" data-required>
+      <label>Готові працювати в офісі пн-пт 9:00-18:00, с. Піддубці (Луцьк)? <span class="req">*</span></label>
+      <div class="radio-group">
+        <div class="radio-option"><input type="radio" name="office" id="offYes" value="yes"><label for="offYes">Так</label></div>
+        <div class="radio-option"><input type="radio" name="office" id="offNo" value="no"><label for="offNo">Ні</label></div>
+      </div>
+      <div class="error-msg">Оберіть варіант</div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-back" onclick="goBack()">&larr; Назад</button>
+      <button class="btn btn-next" onclick="goNext()">Далі &rarr;</button>
+    </div>
+  </div>
+
+  <!-- ═══ STEP 5: Situational ═══ -->
+  <div class="step-panel" id="step5">
+    <div class="step-title">Ситуаційні питання</div>
+    <div class="step-subtitle">Уявіть реальні робочі ситуації. Відповідайте як вважаєте правильним — правильних або неправильних відповідей немає.</div>
+
+    <div class="field" data-required data-min="50">
+      <label>Ситуація 1 <span class="req">*</span></label>
+      <p style="font-size:14px;color:var(--text);margin-bottom:8px;line-height:1.6;">
+        Клієнт з вашої бази не купував вже 3+ місяці. Ви бачите це в обліковій системі. <strong>Ваші дії?</strong>
+      </p>
+      <textarea id="sit1" placeholder="Опишіть ваші дії..." oninput="updateCharCount(this, 50)"></textarea>
+      <div class="char-counter" id="sit1counter">0 / 50 мін. символів</div>
+      <div class="error-msg">Мінімум 50 символів</div>
+    </div>
+
+    <div class="field" data-required data-min="50">
+      <label>Ситуація 2 <span class="req">*</span></label>
+      <p style="font-size:14px;color:var(--text);margin-bottom:8px;line-height:1.6;">
+        Новий клієнт отримав прайс і каже: «У конкурентів дешевше». <strong>Як відреагуєте?</strong>
+      </p>
+      <textarea id="sit2" placeholder="Опишіть вашу реакцію..." oninput="updateCharCount(this, 50)"></textarea>
+      <div class="char-counter" id="sit2counter">0 / 50 мін. символів</div>
+      <div class="error-msg">Мінімум 50 символів</div>
+    </div>
+
+    <div class="field" data-required data-min="50">
+      <label>Ситуація 3 <span class="req">*</span></label>
+      <p style="font-size:14px;color:var(--text);margin-bottom:8px;line-height:1.6;">
+        Клієнт отримав партію товару і незадоволений якістю. Товар повністю відповідає заявленому сорту. <strong>Що будете робити?</strong>
+      </p>
+      <textarea id="sit3" placeholder="Опишіть ваші дії..." oninput="updateCharCount(this, 50)"></textarea>
+      <div class="char-counter" id="sit3counter">0 / 50 мін. символів</div>
+      <div class="error-msg">Мінімум 50 символів</div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-back" onclick="goBack()">&larr; Назад</button>
+      <button class="btn btn-next" onclick="goNext()">Далі &rarr;</button>
+    </div>
+  </div>
+
+  <!-- ═══ STEP 6: Motivation ═══ -->
+  <div class="step-panel" id="step6">
+    <div class="step-title">Мотивація та очікування</div>
+    <div class="step-subtitle">Останній крок — розкажіть про ваші очікування</div>
+
+    <div class="field" data-required>
+      <label>Бажаний рівень доходу від (грн/місяць) <span class="req">*</span></label>
+      <input type="number" id="salary" placeholder="25000" min="0">
+      <div class="error-msg">Вкажіть бажаний рівень доходу</div>
+    </div>
+
+    <div class="field" data-required>
+      <label>Що найважливіше в роботі? <span class="req">*</span> <span class="opt">(максимум 3)</span></label>
+      <div class="check-group" id="importantGroup">
+        <div class="check-option"><input type="checkbox" name="important" id="imp1" value="Стабільна ставка" onchange="limitCheckboxes()"><label for="imp1">Стабільна ставка</label></div>
+        <div class="check-option"><input type="checkbox" name="important" id="imp2" value="Необмежений дохід від %" onchange="limitCheckboxes()"><label for="imp2">Необмежений дохід від %</label></div>
+        <div class="check-option"><input type="checkbox" name="important" id="imp3" value="Колектив та атмосфера" onchange="limitCheckboxes()"><label for="imp3">Колектив та атмосфера</label></div>
+        <div class="check-option"><input type="checkbox" name="important" id="imp4" value="Кар'єрний ріст" onchange="limitCheckboxes()"><label for="imp4">Кар'єрний ріст</label></div>
+        <div class="check-option"><input type="checkbox" name="important" id="imp5" value="Цікавий продукт/ніша" onchange="limitCheckboxes()"><label for="imp5">Цікавий продукт/ніша</label></div>
+        <div class="check-option"><input type="checkbox" name="important" id="imp6" value="Гнучкість та довіра керівника" onchange="limitCheckboxes()"><label for="imp6">Гнучкість та довіра</label></div>
+      </div>
+      <div class="max-warn" id="maxWarn">Максимум 3 варіанти</div>
+      <div class="error-msg">Оберіть хоча б один варіант</div>
+    </div>
+
+    <div class="field" data-required>
+      <label>Звідки дізнались про вакансію? <span class="req">*</span></label>
+      <select id="source">
+        <option value="">Оберіть...</option>
+        <option value="OLX">OLX</option>
+        <option value="Work.ua">Work.ua</option>
+        <option value="Telegram">Telegram</option>
+        <option value="Від знайомих">Від знайомих</option>
+        <option value="Інше">Інше</option>
+      </select>
+      <div class="error-msg">Оберіть джерело</div>
+    </div>
+
+    <div class="field" data-required>
+      <label>Коли готові вийти на роботу? <span class="req">*</span></label>
+      <select id="startDate">
+        <option value="">Оберіть...</option>
+        <option value="Одразу">Одразу</option>
+        <option value="Через тиждень">Через тиждень</option>
+        <option value="Через 2 тижні">Через 2 тижні</option>
+        <option value="Через місяць">Через місяць</option>
+      </select>
+      <div class="error-msg">Оберіть термін</div>
+    </div>
+
+    <div class="field">
+      <label>Чому хочете працювати в L-TEX? <span class="opt">(необов'язково)</span></label>
+      <textarea id="whyLtex" placeholder="Що привабило у нашій вакансії?"></textarea>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-back" onclick="goBack()">&larr; Назад</button>
+      <button class="btn btn-submit" id="btnSubmit" onclick="submitForm()">Надіслати анкету &rarr;</button>
+    </div>
+    <div class="submit-status" id="submitStatus"></div>
+  </div>
+
+  <!-- ═══ THANK YOU ═══ -->
+  <div class="step-panel" id="stepDone">
+    <div class="thank-you">
+      <div class="checkmark-circle">
+        <svg viewBox="0 0 40 40"><polyline points="10,22 18,30 32,12" /></svg>
+      </div>
+      <h2>Дякуємо, <span id="thankName"></span>!</h2>
+      <p>Анкету отримано.</p>
+      <p style="font-size:14px;">Менеджер L-TEX зв'яжеться з вами протягом 1-2 робочих днів.</p>
+      <div id="scoreDisplay"></div>
+      <div class="contacts">
+        <p><strong>Telegram:</strong> @L_TEX</p>
+        <p><strong>Телефон:</strong> +380 67 671 05 16</p>
+      </div>
+      <a href="https://t.me/L_TEX" target="_blank" class="btn-telegram">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M20.665 3.717l-17.73 6.837c-1.21.486-1.203 1.161-.222 1.462l4.552 1.42 10.532-6.645c.498-.303.953-.14.579.192l-8.533 7.701h-.002l.002.001-.314 4.692c.46 0 .663-.211.921-.46l2.211-2.15 4.599 3.397c.848.467 1.457.227 1.668-.785l3.019-14.228c.309-1.239-.473-1.8-1.282-1.434z"/></svg>
+        Написати в Telegram &rarr;
+      </a>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════
+   CONFIGURATION — Replace with your actual values
+   ═══════════════════════════════════════════════════ */
+const CONFIG = {
+  // Google Apps Script Web App URL
+  GOOGLE_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbzSgGBTSWSep67ELr3fGfPOVfSysxczUp0pQScQcNRrzY0sP1Ioyn6JyGQrE5A-yPo/exec',
+  // Sending enabled
+  SEND_TO_SHEETS: true
+};
+
+/* ═══ State ═══ */
+let currentStep = 1;
+const totalSteps = 6;
+
+/* ═══ Progress Bar ═══ */
+function updateProgress() {
+  const dots = document.querySelectorAll('.step-dot');
+  const line = document.getElementById('progressLine');
+  const stepsContainer = document.querySelector('.progress-steps');
+  const containerWidth = stepsContainer.offsetWidth - 56;
+
+  dots.forEach((dot, i) => {
+    const step = i + 1;
+    dot.classList.remove('active', 'done');
+    if (step === currentStep) dot.classList.add('active');
+    else if (step < currentStep) dot.classList.add('done');
+  });
+
+  const progress = (currentStep - 1) / (totalSteps - 1);
+  line.style.width = (progress * containerWidth) + 'px';
+}
+
+/* ═══ Step Navigation ═══ */
+function showStep(n) {
+  document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
+  const target = n > totalSteps ? 'stepDone' : 'step' + n;
+  document.getElementById(target).classList.add('active');
+  currentStep = Math.min(n, totalSteps);
+  updateProgress();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function goNext() {
+  if (!validateStep(currentStep)) return;
+  showStep(currentStep + 1);
+}
+
+function goBack() {
+  if (currentStep > 1) showStep(currentStep - 1);
+}
+
+/* ═══ Validation ═══ */
+function validateStep(step) {
+  const panel = document.getElementById('step' + step);
+  const fields = panel.querySelectorAll('.field[data-required]');
+  let valid = true;
+
+  fields.forEach(field => {
+    field.classList.remove('error');
+    const input = field.querySelector('input[type="text"], input[type="email"], input[type="tel"], input[type="number"], select, textarea');
+    const radios = field.querySelectorAll('input[type="radio"]');
+    const checkboxes = field.querySelectorAll('input[name="important"]');
+    const minLen = field.dataset.min ? parseInt(field.dataset.min) : 0;
+
+    if (radios.length > 0) {
+      if (![...radios].some(r => r.checked)) { field.classList.add('error'); valid = false; }
+    } else if (checkboxes.length > 0) {
+      if ([...checkboxes].filter(c => c.checked).length === 0) { field.classList.add('error'); valid = false; }
+    } else if (input) {
+      const val = input.value.trim();
+      if (!val) { field.classList.add('error'); valid = false; }
+      else if (input.type === 'number') {
+        const num = parseFloat(val);
+        if (isNaN(num)) { field.classList.add('error'); valid = false; }
+        if (input.id === 'age' && (num < 16 || num > 70)) { field.classList.add('error'); valid = false; }
+      }
+      else if (minLen > 0 && val.length < minLen) { field.classList.add('error'); valid = false; }
+    }
+  });
+
+  if (!valid) {
+    const firstErr = panel.querySelector('.field.error');
+    if (firstErr) firstErr.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+  return valid;
+}
+
+/* ═══ Conditional Fields ═══ */
+function toggleConditional(id, show) {
+  const el = document.getElementById(id);
+  if (show) el.classList.add('show');
+  else el.classList.remove('show');
+}
+
+/* ═══ Char Counter ═══ */
+function updateCharCount(textarea, minChars) {
+  const counter = document.getElementById(textarea.id + 'counter');
+  const len = textarea.value.length;
+  counter.textContent = len + ' / ' + minChars + ' мін. символів';
+  counter.classList.toggle('warn', len > 0 && len < minChars);
+}
+
+/* ═══ Checkbox Limit (max 3) ═══ */
+function limitCheckboxes() {
+  const boxes = document.querySelectorAll('#importantGroup input[type="checkbox"]');
+  const checked = [...boxes].filter(b => b.checked);
+  const warn = document.getElementById('maxWarn');
+
+  if (checked.length >= 3) {
+    warn.classList.add('visible');
+    boxes.forEach(b => {
+      if (!b.checked) { b.disabled = true; b.closest('.check-option').classList.add('disabled'); }
+    });
+  } else {
+    warn.classList.remove('visible');
+    boxes.forEach(b => { b.disabled = false; b.closest('.check-option').classList.remove('disabled'); });
+  }
+}
+
+/* ═══ Scoring System ═══ */
+function calculateScore(data) {
+  let score = 0;
+
+  // Experience (max 15)
+  const exp = data.step2_experience.totalExperience;
+  if (exp === '5+') score += 15;
+  else if (exp === '3-5') score += 10;
+  else if (exp === '1-3') score += 5;
+
+  // Sales experience (max 15)
+  if (data.step2_experience.salesExperience === 'yes') score += 15;
+
+  // Second-hand/wholesale experience (max 10)
+  if (data.step2_experience.secondhandExperience === 'yes') score += 10;
+
+  // 1C experience (max 5)
+  const exp1c = data.step2_experience.experience1C;
+  if (exp1c === 'yes') score += 5;
+  else if (exp1c === 'partly') score += 2;
+
+  // Education (max 5)
+  const edu = data.step3_education.level;
+  if (edu === 'Вища' || edu === 'Кілька вищих') score += 5;
+  else if (edu === 'Незакінчена вища') score += 3;
+
+  // Courses (max 3)
+  if (data.step3_education.courses.trim().length > 0) score += 3;
+
+  // Driver license (max 5)
+  if (data.step4_skills.driverLicense === 'yes') score += 5;
+
+  // Own car (max 5)
+  if (data.step4_skills.ownCar === 'yes') score += 5;
+
+  // Travel readiness (max 5)
+  const travel = data.step4_skills.travelReady;
+  if (travel === 'yes') score += 5;
+  else if (travel === 'depends') score += 2;
+
+  // Office readiness (max 5)
+  if (data.step4_skills.officeReady === 'yes') score += 5;
+
+  // Start date (max 5)
+  const start = data.step6_motivation.startDate;
+  if (start === 'Одразу') score += 5;
+  else if (start === 'Через тиждень') score += 3;
+
+  return score; // Max ~78
+}
+
+function getScoreLabel(score) {
+  if (score >= 50) return { text: 'Високий', color: '#1e8449', bg: '#eafaf1' };
+  if (score >= 30) return { text: 'Середній', color: '#b7950b', bg: '#fef9e7' };
+  return { text: 'Низький', color: '#c0392b', bg: '#fdedec' };
+}
+
+/* ═══ Submit ═══ */
+function submitForm() {
+  if (!validateStep(totalSteps)) return;
+
+  const tools = [...document.querySelectorAll('#toolsGroup input:checked')].map(c => c.value);
+  const important = [...document.querySelectorAll('#importantGroup input:checked')].map(c => c.value);
+  const langs = [...document.querySelectorAll('#langGroup input:checked')].map(c => c.value);
+
+  const data = {
+    step1_personal: {
+      fullName: document.getElementById('fullName').value.trim(),
+      age: document.getElementById('age').value,
+      city: document.getElementById('city').value.trim(),
+      phone: document.getElementById('phone').value.trim(),
+      telegram: document.getElementById('telegram').value.trim(),
+      email: document.getElementById('email').value.trim()
+    },
+    step2_experience: {
+      totalExperience: document.getElementById('experience').value,
+      salesExperience: document.querySelector('input[name="salesExp"]:checked')?.value || '',
+      salesDescription: document.getElementById('salesDescription')?.value?.trim() || '',
+      secondhandExperience: document.querySelector('input[name="shExp"]:checked')?.value || '',
+      experience1C: document.querySelector('input[name="exp1c"]:checked')?.value || '',
+      lastJob: document.getElementById('lastJob').value.trim(),
+      reasonForSearch: document.getElementById('reasonSearch').value.trim()
+    },
+    step3_education: {
+      level: document.getElementById('eduLevel').value,
+      institution: document.getElementById('eduInstitution').value.trim(),
+      year: document.getElementById('eduYear').value,
+      courses: document.getElementById('eduCourses').value.trim(),
+      languages: langs
+    },
+    step4_skills: {
+      tools: tools,
+      driverLicense: document.querySelector('input[name="license"]:checked')?.value || '',
+      ownCar: document.querySelector('input[name="car"]:checked')?.value || '',
+      travelReady: document.querySelector('input[name="travel"]:checked')?.value || '',
+      officeReady: document.querySelector('input[name="office"]:checked')?.value || ''
+    },
+    step5_situations: {
+      situation1: document.getElementById('sit1').value.trim(),
+      situation2: document.getElementById('sit2').value.trim(),
+      situation3: document.getElementById('sit3').value.trim()
+    },
+    step6_motivation: {
+      desiredSalary: document.getElementById('salary').value,
+      importantInWork: important,
+      vacancySource: document.getElementById('source').value,
+      startDate: document.getElementById('startDate').value,
+      whyLtex: document.getElementById('whyLtex').value.trim()
+    }
+  };
+
+  // Calculate score
+  const score = calculateScore(data);
+  const scoreInfo = getScoreLabel(score);
+  data.autoScore = score;
+  data.scoreLabel = scoreInfo.text;
+  data.timestamp = new Date().toISOString();
+
+  console.log('═══ ANKETA SUMMARY ═══');
+  console.log(JSON.stringify(data, null, 2));
+  console.log('Score:', score, '/ 78 (' + scoreInfo.text + ')');
+  console.log('═══ END SUMMARY ═══');
+
+  // Send to Google Sheets (if configured)
+  if (CONFIG.SEND_TO_SHEETS && CONFIG.GOOGLE_SCRIPT_URL !== 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE') {
+    const btn = document.getElementById('btnSubmit');
+    const status = document.getElementById('submitStatus');
+    btn.disabled = true;
+    status.className = 'submit-status sending';
+    status.textContent = 'Надсилаємо анкету...';
+
+    fetch(CONFIG.GOOGLE_SCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    })
+    .then(() => {
+      status.className = 'submit-status success';
+      status.textContent = 'Анкету збережено!';
+      setTimeout(() => showThankYou(data, score, scoreInfo), 800);
+    })
+    .catch(err => {
+      console.error('Submit error:', err);
+      status.className = 'submit-status fail';
+      status.textContent = 'Помилка з\'єднання. Анкету збережено локально.';
+      setTimeout(() => showThankYou(data, score, scoreInfo), 1500);
+    });
+  } else {
+    showThankYou(data, score, scoreInfo);
+  }
+}
+
+function showThankYou(data, score, scoreInfo) {
+  const firstName = data.step1_personal.fullName.split(' ').slice(1, 2).join('') || data.step1_personal.fullName.split(' ')[0];
+  document.getElementById('thankName').textContent = firstName;
+
+  document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('stepDone').classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ═══ Init ═══ */
+updateProgress();
+</script>
+</body>
+</html>
